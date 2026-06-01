@@ -1,0 +1,49 @@
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/task-backend:$SHORT_SHA'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/task-backend:latest'
+      - './backend'
+
+  # Push image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/$PROJECT_ID/task-backend:$SHORT_SHA'
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/cloud-builders/run'
+    args:
+      - 'deploy'
+      - 'task-backend'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/task-backend:$SHORT_SHA'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--no-allow-unauthenticated'
+      - '--set-env-vars'
+      - 'DATABASE_URL=$$DATABASE_URL,SECRET_KEY=$$SECRET_KEY'
+
+images:
+  - 'gcr.io/$PROJECT_ID/task-backend:$SHORT_SHA'
+  - 'gcr.io/$PROJECT_ID/task-backend:latest'
+
+options:
+  machineType: 'N1_HIGHCPU_8'
+
+substitutions:
+  _DATABASE_URL: ''
+  _SECRET_KEY: ''
+
+secrets:
+  - kmsKeyName: projects/$PROJECT_ID/locations/us-central1/keyRings/task-app-secrets/cryptoKeys/db-url
+    secretEnv: ['DATABASE_URL']
+  - kmsKeyName: projects/$PROJECT_ID/locations/us-central1/keyRings/task-app-secrets/cryptoKeys/secret-key
+    secretEnv: ['SECRET_KEY']
+

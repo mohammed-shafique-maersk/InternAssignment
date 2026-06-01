@@ -1,0 +1,44 @@
+Deployment Instructions
+Since you requested free hosting, here is the best modern combination:
+
+Deploying the Backend (Render)
+Render offers free hosting for Python web services.
+
+Create a GitHub repository and push your backend folder there.
+Sign up on Render.com and click New Web Service.
+Connect your GitHub repo.
+Set the Build Command to: pip install -r requirements.txt
+Set the Start Command to: gunicorn app:app
+Add an Environment Variable: SECRET_KEY = some-long-random-string.
+Click Deploy. Once it finishes, copy the Render URL (e.g., https://my-task-backend.onrender.com).
+
+
+Deploying the Frontend (Netlify or Vercel)
+Both platforms are free for static sites. Let's use Netlify.
+
+Open your frontend/app.js file.
+Change const API_URL = 'http://127.0.0.1:5000'; to your new Render Backend URL (e.g., const API_URL = 'https://my-task-backend.onrender.com';).
+Create a free account on Netlify.
+Go to the dashboard, click Add new site -> Deploy manually.
+Drag and drop your entire frontend folder into the upload box.
+Your frontend is instantly deployed!
+
+
+
+Run the Project Locally
+Once your files are saved, you can spin up the project to see it in action.
+
+Start the Backend:
+
+bash
+cd backend
+python -m venv venv
+
+# Activate the virtual environment
+# On macOS/Linux: source venv/bin/activate
+# On Windows: .\venv\Scripts\activate
+
+pip install -r requirements.txt
+python app.py
+
+View the Frontend: Since we are using vanilla JavaScript, HTML, and CSS, you can just open frontend/index.html directly in your web browser. Alternatively, if you have an extension like Live Server installed in your IDE, you can use that to serve the frontend folder.

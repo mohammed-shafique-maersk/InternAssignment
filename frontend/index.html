@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Notifications -->
+    <div id="notification" class="hidden"></div>
+
+    <!-- Authentication Section -->
+    <div id="auth-section" class="container">
+        <h2>Task Manager</h2>
+        <div class="card">
+            <h3 id="auth-title">Login</h3>
+            <form id="auth-form">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" id="auth-btn">Login</button>
+            </form>
+            <p id="toggle-auth">Need an account? <span class="link">Register</span></p>
+        </div>
+    </div>
+
+    <!-- Task Board Section -->
+    <div id="board-section" class="container hidden">
+        <header>
+            <h2>My Board</h2>
+            <button id="logout-btn">Logout</button>
+        </header>
+
+        <form id="add-task-form">
+            <input type="text" id="new-task-title" placeholder="What needs to be done?" required>
+            <button type="submit">Add Task</button>
+        </form>
+
+        <div id="loading" class="hidden">Loading tasks...</div>
+
+        <div class="board">
+            <div class="column" id="col-todo">
+                <h3>Todo</h3>
+                <div class="task-list" id="list-Todo"></div>
+            </div>
+            <div class="column" id="col-progress">
+                <h3>In Progress</h3>
+                <div class="task-list" id="list-In-Progress"></div>
+            </div>
+            <div class="column" id="col-done">
+                <h3>Done</h3>
+                <div class="task-list" id="list-Done"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

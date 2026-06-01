@@ -1,4 +1,4 @@
-const API_URL = 'http://127.0.0.1:5000'; // Change this to your deployed backend URL later
+const API_URL = 'https://internassignment-in55.onrender.com'; // Render backend URL
 
 // DOM Elements
 const authSection = document.getElementById('auth-section');
